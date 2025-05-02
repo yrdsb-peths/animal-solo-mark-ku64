@@ -9,7 +9,13 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class Elephant extends Actor
 {
     GreenfootSound elephantSound = new GreenfootSound ("elephantscream.mp3");
-    GreenfootImage[] idle = new GreenfootImage[8];
+    GreenfootImage[] idleRight = new GreenfootImage[8];
+    GreenfootImage[] idleLeft = new GreenfootImage[8];
+    
+    
+    //direction the elephant is facing at the start
+    String facing = "right";
+    SimpleTimer animationTimer = new SimpleTimer();
     
     /**
      * Constructor - the code that gets run one time when object is created
@@ -18,9 +24,21 @@ public class Elephant extends Actor
     {
         for (int i=0; i<8; i++)
         {
-            idle[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            idleRight[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            idleRight[i].scale(100,100);
         }
-        setImage(idle[0]);
+        
+        for(int i=0; i<idleLeft.length;i++)
+        {
+            idleLeft[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
+            idleLeft[i].mirrorHorizontally();
+            idleLeft[i].scale(100,100);
+        }
+        
+        animationTimer.mark();
+        
+        //initial elephant image
+        setImage(idleRight[0]);
     }
     
     /**
@@ -29,8 +47,22 @@ public class Elephant extends Actor
     int imageIndex = 0;
     public void animateElephant()
     {
-        setImage(idle[imageIndex]);
-        imageIndex = (imageIndex + 1) % idle.length;
+        if (animationTimer.millisElapsed() < 150)
+        {
+            return;
+        }
+        animationTimer.mark();
+        if(facing.equals ("right"))
+        {
+            setImage(idleRight[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleRight.length;
+        }
+        else
+        {
+            setImage(idleLeft[imageIndex]);
+            imageIndex = (imageIndex + 1) % idleLeft.length;
+        }
+        
     }
     
     public void act()
@@ -39,11 +71,13 @@ public class Elephant extends Actor
     
         if (Greenfoot.isKeyDown("left"))
         {
-            move(-1);
+            move(-2);
+            facing = "right";
         }
         else if (Greenfoot.isKeyDown("right"))
         {
-            move(1);
+            move(2);
+            facing = "left";
         }
         
         // Remove apple if elephant eats it
