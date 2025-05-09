@@ -24,6 +24,9 @@ public class MyWorld extends World {
         addObject(scoreLabel, 50, 50);
         
         createApple();
+        
+        //Sets background image
+        setBackground("images/background.jpg");
     }
     
     /**

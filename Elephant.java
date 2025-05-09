@@ -13,7 +13,7 @@ public class Elephant extends Actor
     GreenfootImage[] idleLeft = new GreenfootImage[8];
     
     
-    //direction the elephant is facing at the start
+    //direction the elephant is facing at the star
     String facing = "right";
     SimpleTimer animationTimer = new SimpleTimer();
     
@@ -22,6 +22,7 @@ public class Elephant extends Actor
      */
     public Elephant()
     {
+       
         for (int i=0; i<8; i++)
         {
             idleRight[i] = new GreenfootImage("images/elephant_idle/idle" + i + ".png");
@@ -42,7 +43,7 @@ public class Elephant extends Actor
     }
     
     /**
-     * Animate the elephatn
+     * Animate the elephant
      */
     int imageIndex = 0;
     public void animateElephant()
